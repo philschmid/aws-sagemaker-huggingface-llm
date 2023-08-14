@@ -30,7 +30,7 @@
   resolved "https://registry.yarnpkg.com/@aws-cdk/asset-node-proxy-agent-v5/-/asset-node-proxy-agent-v5-2.0.166.tgz#467507db141cd829ff8aa9d6ea5519310a4276b8"
   integrity sha512-j0xnccpUQHXJKPgCwQcGGNu4lRiC1PptYfdxBIH1L4dRK91iBxtSQHESRQX+yB47oGLaF/WfNN/aF3WXwlhikg==
 
-"@aws-cdk/aws-sagemaker-alpha@^2.91.0-alpha.0":
+"@aws-cdk/aws-sagemaker-alpha@2.91.0-alpha.0":
   version "2.91.0-alpha.0"
   resolved "https://registry.yarnpkg.com/@aws-cdk/aws-sagemaker-alpha/-/aws-sagemaker-alpha-2.91.0-alpha.0.tgz#131883e57653d894c64d6b1fbb3c8f70d2daaf6e"
   integrity sha512-aIFy+jnU9CEKzJhUolrOpuhgK2nLJ/vLP+1gL4V6m0z20mjrkbSGGsIqnJwdl1z6JgFIE48pS8vwqiWnTtebGA==

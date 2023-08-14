@@ -8,7 +8,7 @@ const project = new awscdk.AwsCdkConstructLibrary({
   repositoryUrl: 'https://github.com/philschmid/aws-sagemaker-huggingface-llm.git',
   license: 'Apache-2.0',
   keywords: ['cdk', 'awscdk', 'aws-cdk', 'huggingface', 'llm', 'sagemaker'],
-  deps: ['@aws-cdk/aws-sagemaker-alpha', 'aws-cdk-lib/aws-ecr'], /* Runtime dependencies of this module. */
+  peerDeps: ['@aws-cdk/aws-sagemaker-alpha'], /* Runtime dependencies of this module. */
   // description: undefined,  /* The description is just a string that helps people understand the purpose of the package. */
   // devDeps: [],             /* Build dependencies for this module. */
   // packageName: undefined,  /* The "name" in package.json. */

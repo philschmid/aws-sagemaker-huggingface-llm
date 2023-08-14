@@ -1,15 +1,12 @@
-import * as path from 'path';
 import * as sagemaker from '@aws-cdk/aws-sagemaker-alpha';
 import * as cdk from 'aws-cdk-lib';
 import { Construct } from 'constructs';
-import { regionMapping } from './utils';
 
 
 export interface HuggingFaceLlmProps {
   readonly instanceType: string;
   readonly environmentVariables: { [key: string]: string };
   readonly name?: string;
-  readonly HuggingFaceModelId?: string;
   readonly s3ModelPath?: string;
   readonly tgiVersion?: string;
   readonly pytrochVersion?: string;
@@ -22,7 +19,7 @@ export class HuggingFaceLlm extends Construct {
     super(scope, id);
 
     // Check if we deploy from S3 or from the Hugging Face Hub
-    const isHuggingFaceHubModel = props.HuggingFaceModelId !== undefined;
+    const isHuggingFaceHubModel = props.environmentVariables.HF_MODEL_ID !== undefined;
     if (isHuggingFaceHubModel && props.s3ModelPath !== undefined) {
       throw new Error('Cannot specify both HuggingFaceModelId and s3ModelPath');
     } else if (!isHuggingFaceHubModel && props.s3ModelPath === undefined) {
