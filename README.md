@@ -7,12 +7,14 @@ The Hugging Face LLM CDK Construct Library provides constructs to easily deploy 
 1. install the library
 
 ```bash
-npm install 
+npm install aws-sagemaker-huggingface-llm
 ```
 
 2. Add construct 
 
 ```typescript
+import { HuggingFaceLlm, HuggingFaceLlmProps } from 'aws-sagemaker-huggingface-llm';
+
 const props: HuggingFaceLlmProps = {
   name: 'test',
   instanceType: 'ml.g5.2xlarge',
