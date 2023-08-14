@@ -10,7 +10,7 @@ The Hugging Face LLM CDK Construct Library provides constructs to easily deploy 
 npm install aws-sagemaker-huggingface-llm
 ```
 
-2. Add construct 
+2. Add construct
 
 ```typescript
 import { HuggingFaceLlm, HuggingFaceLlmProps } from 'aws-sagemaker-huggingface-llm';
@@ -34,19 +34,21 @@ new HuggingFaceLlm(stack, 'LLM-Sample-Lib', props);
 ```bash
 npm run build
 ```
-then test with 
+then test with
 
 ```bash
-cdk synth --app='npx ts-node --prefer-ts-exts src/integ.default.ts ' --profile hf-sm > test.yaml 
+cdk synth --app='npx ts-node --prefer-ts-exts src/integ.default.ts ' --profile hf-sm > test.yaml
 ```
 
-deploy 
-  
+deploy
+
 ```bash
-cdk deploy --app='npx ts-node --prefer-ts-exts src/integ.default.ts ' --profile hf-sm > test.yaml 
+cdk deploy --app='npx ts-node --prefer-ts-exts src/integ.default.ts ' --profile hf-sm > test.yaml
 ```
 
 
 ## Acknowledgements
 
 Big thank you to [hayao-k](https://dev.to/hayao_k) for his [blog post](https://dev.to/aws-builders/a-beginner-s-guide-to-create-aws-cdk-construct-library-with-projen-5eh4)
+
+
