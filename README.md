@@ -37,13 +37,13 @@ npm run build
 then test with
 
 ```bash
-cdk synth --app='npx ts-node --prefer-ts-exts src/integ.default.ts ' --profile hf-sm > test.yaml
+cdk synth --app='npx ts-node --prefer-ts-exts src/integ.default.ts' --profile xxx
 ```
 
 deploy
 
 ```bash
-cdk deploy --app='npx ts-node --prefer-ts-exts src/integ.default.ts ' --profile hf-sm > test.yaml
+cdk deploy --app='npx ts-node --prefer-ts-exts src/integ.default.ts' --profile xxxx
 ```
 
 
