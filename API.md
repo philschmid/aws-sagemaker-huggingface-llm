@@ -1,4 +1,53 @@
-# replace this
+# Hugging Face LLM CDK Construct Library
+
+The Hugging Face LLM CDK Construct Library provides constructs to easily deploy a Hugging Face LLM model to Amazon SageMaker.
+
+## Getting Started
+
+1. install the library
+
+```bash
+npm install
+```
+
+2. Add construct
+
+```typescript
+const props: HuggingFaceLlmProps = {
+  name: 'test',
+  instanceType: 'ml.g5.2xlarge',
+  environmentVariables: {
+    HF_MODEL_ID: 'NousResearch/Llama-2-7b-chat-hf',
+    SM_NUM_GPUS: '1',
+    MAX_INPUT_LENGTH: '2048',
+    MAX_TOTAL_TOKENS: '4096',
+  },
+};
+
+new HuggingFaceLlm(stack, 'LLM-Sample-Lib', props);
+```
+
+## Local test
+
+```bash
+npm run build
+```
+then test with
+
+```bash
+cdk synth --app='npx ts-node --prefer-ts-exts src/integ.default.ts ' --profile hf-sm > test.yaml
+```
+
+deploy
+
+```bash
+cdk deploy --app='npx ts-node --prefer-ts-exts src/integ.default.ts ' --profile hf-sm > test.yaml
+```
+
+
+## Acknowledgements
+
+Big thank you to [hayao-k](https://dev.to/hayao_k) for his [blog post](https://dev.to/aws-builders/a-beginner-s-guide-to-create-aws-cdk-construct-library-with-projen-5eh4)
 # API Reference <a name="API Reference" id="api-reference"></a>
 
 ## Constructs <a name="Constructs" id="Constructs"></a>
@@ -134,7 +183,9 @@ const huggingFaceLlmProps: HuggingFaceLlmProps = { ... }
 | <code><a href="#aws-sagemaker-huggingface-llm.HuggingFaceLlmProps.property.name">name</a></code> | <code>string</code> | *No description.* |
 | <code><a href="#aws-sagemaker-huggingface-llm.HuggingFaceLlmProps.property.pytrochVersion">pytrochVersion</a></code> | <code>string</code> | *No description.* |
 | <code><a href="#aws-sagemaker-huggingface-llm.HuggingFaceLlmProps.property.s3ModelPath">s3ModelPath</a></code> | <code>string</code> | *No description.* |
+| <code><a href="#aws-sagemaker-huggingface-llm.HuggingFaceLlmProps.property.startUpHealthCheckTimeoutInSeconds">startUpHealthCheckTimeoutInSeconds</a></code> | <code>number</code> | *No description.* |
 | <code><a href="#aws-sagemaker-huggingface-llm.HuggingFaceLlmProps.property.tgiVersion">tgiVersion</a></code> | <code>string</code> | *No description.* |
+| <code><a href="#aws-sagemaker-huggingface-llm.HuggingFaceLlmProps.property.volumeSizeInGb">volumeSizeInGb</a></code> | <code>number</code> | *No description.* |
 
 ---
 
@@ -188,6 +239,16 @@ public readonly s3ModelPath: string;
 
 ---
 
+##### `startUpHealthCheckTimeoutInSeconds`<sup>Optional</sup> <a name="startUpHealthCheckTimeoutInSeconds" id="aws-sagemaker-huggingface-llm.HuggingFaceLlmProps.property.startUpHealthCheckTimeoutInSeconds"></a>
+
+```typescript
+public readonly startUpHealthCheckTimeoutInSeconds: number;
+```
+
+- *Type:* number
+
+---
+
 ##### `tgiVersion`<sup>Optional</sup> <a name="tgiVersion" id="aws-sagemaker-huggingface-llm.HuggingFaceLlmProps.property.tgiVersion"></a>
 
 ```typescript
@@ -195,6 +256,16 @@ public readonly tgiVersion: string;
 ```
 
 - *Type:* string
+
+---
+
+##### `volumeSizeInGb`<sup>Optional</sup> <a name="volumeSizeInGb" id="aws-sagemaker-huggingface-llm.HuggingFaceLlmProps.property.volumeSizeInGb"></a>
+
+```typescript
+public readonly volumeSizeInGb: number;
+```
+
+- *Type:* number
 
 ---
 

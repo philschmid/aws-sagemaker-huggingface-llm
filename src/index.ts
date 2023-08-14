@@ -1,7 +1,7 @@
 import * as sagemaker from '@aws-cdk/aws-sagemaker-alpha';
 import * as cdk from 'aws-cdk-lib';
+import { CfnEndpointConfig } from 'aws-cdk-lib/aws-sagemaker';
 import { Construct } from 'constructs';
-
 
 export interface HuggingFaceLlmProps {
   readonly instanceType: string;
@@ -10,6 +10,7 @@ export interface HuggingFaceLlmProps {
   readonly s3ModelPath?: string;
   readonly tgiVersion?: string;
   readonly pytrochVersion?: string;
+  readonly startUpHealthCheckTimeoutInSeconds?: number;
 }
 
 
@@ -28,10 +29,13 @@ export class HuggingFaceLlm extends Construct {
 
     // create names
     const name = props.name ?? 'HuggingFaceLlm';
-    const unqiueName = `${name}-${cdk.Names.uniqueId(this)}`;
-    const modelName = `${unqiueName}-model`;
-    const endpointConfigName = `${unqiueName}-config`;
-    const endpointName = `${unqiueName}-endpoint`;
+    const uniqueId = String(
+      Date.now().toString(32) +
+      Math.random().toString(16),
+    ).replace(/\./g, '');
+    const modelName = `${name}-model-${uniqueId}`;
+    const endpointConfigName = `${name}-config-${uniqueId}`;
+    const endpointName = `${name}-endpoint-${uniqueId}`;
 
     // get Hugging Face LLM container image
     const tgiVersion = props.tgiVersion ?? '0.9.3';
@@ -46,12 +50,10 @@ export class HuggingFaceLlm extends Construct {
       image: containerImage,
       environment: props.environmentVariables,
     };
-    if (props.s3ModelPath !== undefined && !isHuggingFaceHubModel) {
+    if (props.s3ModelPath !== undefined) {
       const modelData = sagemaker.ModelData.fromAsset(props.s3ModelPath);
       // @ts-ignore
       containerDefintion.modelData = modelData;
-    } else {
-      throw new Error('Must specify either HuggingFaceModelId or s3ModelPath');
     }
 
     const sageMakerModel = new sagemaker.Model(this, 'HuggingFaceLlmModel', {
@@ -61,19 +63,28 @@ export class HuggingFaceLlm extends Construct {
 
 
     // create SageMaker endpoint configuration
-    const sagemakerEndpointConfig = new sagemaker.EndpointConfig(this, 'HuggingFaceLlmEndpointConfiguration', {
+    const startUpHealthCheckTimeoutInSeconds = props.startUpHealthCheckTimeoutInSeconds ?? 600;
+
+    const cfnEndpointConfig = new CfnEndpointConfig(this, 'EndpointConfig', {
       endpointConfigName: endpointConfigName,
-      instanceProductionVariants: [
-        {
-          model: sageMakerModel,
-          variantName: 'primary',
-          initialInstanceCount: 1,
-          instanceType: new sagemaker.InstanceType(props.instanceType),
-        },
-      ],
+      productionVariants:
+        [
+          {
+            modelName: sageMakerModel.modelName,
+            variantName: 'primary',
+            initialVariantWeight: 1.0,
+            initialInstanceCount: 1,
+            instanceType: props.instanceType,
+            containerStartupHealthCheckTimeoutInSeconds: startUpHealthCheckTimeoutInSeconds,
+          },
+        ],
     });
+    const bridgeEndpointConfig = sagemaker.EndpointConfig.fromEndpointConfigName(this, 'BridgeEndpointConfig', endpointConfigName);
+    bridgeEndpointConfig.node.addDependency(cfnEndpointConfig);
     // delpoy SageMaker endpoint
-    this.endpoint = new sagemaker.Endpoint(this, 'HuggingFaceLlmEndpoint', { endpointName, endpointConfig: sagemakerEndpointConfig });
+    this.endpoint = new sagemaker.Endpoint(this, 'HuggingFaceLlmEndpoint', { endpointName, endpointConfig: bridgeEndpointConfig });
+    this.endpoint.node.addDependency(cfnEndpointConfig);
+    this.endpoint.node.addDependency(bridgeEndpointConfig);
 
     new cdk.CfnOutput(this, 'EndpointName', { value: this.endpoint.endpointName });
   }

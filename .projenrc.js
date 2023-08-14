@@ -12,9 +12,6 @@ const project = new awscdk.AwsCdkConstructLibrary({
   // description: undefined,  /* The description is just a string that helps people understand the purpose of the package. */
   // devDeps: [],             /* Build dependencies for this module. */
   // packageName: undefined,  /* The "name" in package.json. */
-  publishToPypi: {
-    distName: 'aws-sagemaker-huggingface-llm',
-    module: 'aws_sagemaker_huggingface_llm',
-  },
+  gitignore: ['cdk.out'],
 });
 project.synth();
