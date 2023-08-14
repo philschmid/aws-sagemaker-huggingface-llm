@@ -185,7 +185,6 @@ const huggingFaceLlmProps: HuggingFaceLlmProps = { ... }
 | <code><a href="#aws-sagemaker-huggingface-llm.HuggingFaceLlmProps.property.s3ModelPath">s3ModelPath</a></code> | <code>string</code> | *No description.* |
 | <code><a href="#aws-sagemaker-huggingface-llm.HuggingFaceLlmProps.property.startUpHealthCheckTimeoutInSeconds">startUpHealthCheckTimeoutInSeconds</a></code> | <code>number</code> | *No description.* |
 | <code><a href="#aws-sagemaker-huggingface-llm.HuggingFaceLlmProps.property.tgiVersion">tgiVersion</a></code> | <code>string</code> | *No description.* |
-| <code><a href="#aws-sagemaker-huggingface-llm.HuggingFaceLlmProps.property.volumeSizeInGb">volumeSizeInGb</a></code> | <code>number</code> | *No description.* |
 
 ---
 
@@ -256,16 +255,6 @@ public readonly tgiVersion: string;
 ```
 
 - *Type:* string
-
----
-
-##### `volumeSizeInGb`<sup>Optional</sup> <a name="volumeSizeInGb" id="aws-sagemaker-huggingface-llm.HuggingFaceLlmProps.property.volumeSizeInGb"></a>
-
-```typescript
-public readonly volumeSizeInGb: number;
-```
-
-- *Type:* number
 
 ---
 
