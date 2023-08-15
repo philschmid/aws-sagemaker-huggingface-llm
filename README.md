@@ -13,20 +13,28 @@ npm install aws-sagemaker-huggingface-llm
 2. Add construct
 
 ```typescript
-import { HuggingFaceLlm, HuggingFaceLlmProps } from 'aws-sagemaker-huggingface-llm';
+import * as cdk from 'aws-cdk-lib';
+import { Construct } from 'constructs';
+import { HuggingFaceLlm } from 'aws-sagemaker-huggingface-llm';
 
-const props: HuggingFaceLlmProps = {
-  name: 'test',
-  instanceType: 'ml.g5.2xlarge',
-  environmentVariables: {
-    HF_MODEL_ID: 'NousResearch/Llama-2-7b-chat-hf',
-    SM_NUM_GPUS: '1',
-    MAX_INPUT_LENGTH: '2048',
-    MAX_TOTAL_TOKENS: '4096',
-  },
-};
+export class HuggingfaceCdkExampleStack extends cdk.Stack {
+  constructor(scope: Construct, id: string, props?: cdk.StackProps) {
+    super(scope, id, props);
 
-new HuggingFaceLlm(stack, 'LLM-Sample-Lib', props);
+    // create new LLM SageMaker Endpoint
+    new HuggingFaceLlm(this, 'Llama2Llm', {
+      name: 'llama2-chat',
+      instanceType: 'ml.g5.2xlarge',
+      environmentVariables: {
+        HF_MODEL_ID: 'NousResearch/Llama-2-7b-chat-hf',
+        SM_NUM_GPUS: '1',
+        MAX_INPUT_LENGTH: '2048',
+        MAX_TOTAL_TOKENS: '4096',
+        MAX_BATCH_TOTAL_TOKENS: '8192'
+      }
+    })
+  }
+}
 ```
 
 ## Local test
